@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from getStatsHandler import getStats
+from queryHandler import query
 
 
 apiHandlers = {
-    'getStats': getStats
+    'getStats': getStats,
+    'query': query
 }

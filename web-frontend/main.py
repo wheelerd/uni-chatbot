@@ -4,8 +4,10 @@ from httpHandler import HTTPApiHandler
 from fileCacher import cacheFile
 
 def startServer(port):
-    cacheFile("/index.html", "files/index.html", "text/html")
     cacheFile(None, "files/404.html", "text/html")
+    cacheFile("/index.html", "files/index.html", "text/html")
+    cacheFile("/rest-caller.js", "files/rest-caller.js", "text/javascript")
+    cacheFile("/styles.css", "files/styles.css", "text/css")
     httpd = ThreadingHTTPServer(('', port), HTTPApiHandler)
     try:
         print("Server started")

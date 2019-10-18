@@ -1,5 +1,5 @@
 #!/usr/bin/env python3 
 
 
-def getStats(query):
-    return {"name": "jeff"}
+def getStats(queryString):
+    return {"apiCalls": 999} # TODO implement
