@@ -5,15 +5,31 @@ import json
 import re
 from apiHandlers import apiHandlers
 from restError import RESTError
+from fileCacher import *
 
 
 apiPathRegex = re.compile('^/api/([^/]*)$')
 
 
 class HTTPApiHandler(BaseHTTPRequestHandler):
-    def _serveMissingFile(self):
-        self.send_response(404)
-        self.end_headers()
+    def _serveFile(self, path):
+        if path == '/':
+            path = '/index.html'
+        
+        self.log_message('Serving file "{}"'.format(path))
+        if isFileInCache(path):
+            thisFile = getFileFromCache(path)
+            self.send_response(200)
+            self.send_header("Content-Type", thisFile.mimetype)
+            self.end_headers()
+            self.wfile.write(thisFile.bytebuf)
+        else:
+            notFoundFile = getFileFromCache(None)
+            self.log_message("File missing. Sending 404 page...")
+            self.send_response(404)
+            self.send_header("Content-Type", notFoundFile.mimetype)
+            self.end_headers()
+            self.wfile.write(notFoundFile.bytebuf)
 
     def do_GET(self):
         try:
@@ -54,8 +70,7 @@ class HTTPApiHandler(BaseHTTPRequestHandler):
                     self.end_headers()
             else:
                 # Serving a file
-                self.send_response(500, "NIE - file serving")
-                self.end_headers()
+                self._serveFile(normalPath)
         except:
             self.send_response_only(500)
             raise
