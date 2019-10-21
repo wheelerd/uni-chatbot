@@ -45,10 +45,21 @@ def stock_historical_price_data(company, days):
         dates.append(date[5:])
     plt.plot(dates, closes)
     plt.show()
+
+def stock_sectors():
+    url = "https://financialmodelingprep.com/api/v3/stock/sectors-performance"
+    data = get_stock_json(url)
+    sectorInfo = data["sectorPerformance"]
+    for i in range( len(sectorInfo)):
+        print(sectorInfo[i]["sector"])
+        print(sectorInfo[i]["changesPercentage"])
+    
     
     
     
 
-most_gainer_companies("companyName ticker changes price")
+#most_gainer_companies("companyName ticker changes price")
 
-stock_historical_price_data("unilever", 14)
+#stock_historical_price_data("unilever", 14)
+
+#stock_sectors()
