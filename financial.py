@@ -8,6 +8,16 @@ def get_stock_json(urlGiven):
         data = json.loads(url.read().decode())
         return data
 
+def market_open_check():
+    """Checks if the stock markets are currently open"""
+    url = "https://financialmodelingprep.com/api/v3/is-the-market-open"
+    data = get_stock_json(url)
+    marketState = data["isTheStockMarketOpen"]
+    if marketState:
+        print("The market is open")
+    else:
+        print("The market is closed")
+
 def json_return_gainer():
     """Returns the data of the 10 most gainer companies daily"""
     url = "https://financialmodelingprep.com/api/v3/stock/gainers"
@@ -45,10 +55,24 @@ def stock_historical_price_data(company, days):
         dates.append(date[5:])
     plt.plot(dates, closes)
     plt.show()
+
+def stock_sectors():
+    """Shows the change in percentage of the 11 stock market sectors"""
+    url = "https://financialmodelingprep.com/api/v3/stock/sectors-performance"
+    data = get_stock_json(url)
+    sectorInfo = data["sectorPerformance"]
+    for i in range( len(sectorInfo)):
+        print(sectorInfo[i]["sector"])
+        print(sectorInfo[i]["changesPercentage"])
+    
     
     
     
 
-most_gainer_companies("companyName ticker changes price")
+#most_gainer_companies("companyName ticker changes price")
 
-stock_historical_price_data("unilever", 14)
+#stock_historical_price_data("unilever", 14)
+
+#stock_sectors()
+
+#market_open_check()
