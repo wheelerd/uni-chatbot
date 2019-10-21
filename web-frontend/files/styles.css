@@ -1,3 +1,24 @@
 body {
     font-family: 'Roboto', sans-serif;
 }
+
+#inputBox {
+    flex-grow: 1;
+}
+
+#askButton {
+    flex-basis: 100px;
+}
+
+#questionBox {
+    display: flex;
+}
+
+.answerBox {
+    border-radius: 16px;
+    background-color: maroon;
+    margin: 8px 0;
+    padding: 4px 12px;
+    color: white;
+    font-weight: medium;
+}
