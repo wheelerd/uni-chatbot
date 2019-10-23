@@ -1,4 +1,4 @@
-src/__pycache__
-src/web_frontend/__pycache__
-src/facebook_frontend/__pycache__
-src/training/__pycache__
+stockbot/__pycache__
+stockbot/web_frontend/__pycache__
+stockbot/facebook_frontend/__pycache__
+stockbot/training/__pycache__
