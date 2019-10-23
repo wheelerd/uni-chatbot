@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python3 -m src.web_frontend
+python3 -m stockbot.web_frontend
