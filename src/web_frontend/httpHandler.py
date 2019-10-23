@@ -3,9 +3,9 @@ from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import json
 import re
-from apiHandlers import apiHandlers
-from restError import RESTError
-from fileCacher import *
+from .apiHandlers import apiHandlers
+from .restError import RESTError
+from .fileCacher import *
 
 
 apiPathRegex = re.compile('^/api/([^/]*)$')
