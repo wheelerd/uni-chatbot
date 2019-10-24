@@ -17,6 +17,12 @@ function doQuery() {
     xhttp.send();
 }
 
+function processTextKey(event) {
+    console.log(event);
+    if(event.key === "Enter")
+        doQuery();
+}
+
 function getMetrics() {
     // Do REST request
     var xhttp = new XMLHttpRequest();
@@ -57,6 +63,9 @@ function addAnswer(text) {
 function setupAll() {
     // Setup ask button
     document.getElementById("askButton").onclick = doQuery;
+    
+    // Setup input text box
+    document.getElementById("inputBox").addEventListener("keydown", processTextKey);
     
     // Setup metrics timer and call first time
     setInterval(getMetrics, 20000); // Auto-update every 20 seconds

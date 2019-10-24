@@ -8,7 +8,7 @@ from .restError import RESTError
 from .fileCacher import *
 
 
-apiPathRegex = re.compile('^/api/([^/]*)$')
+apiPathRegex = re.compile(r'^/api/([^/]*)$')
 
 
 class HTTPApiHandler(BaseHTTPRequestHandler):
