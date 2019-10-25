@@ -74,7 +74,7 @@ def stock_historical_price_data(company, days):
         dates.append(date[5:])
     plt.plot(dates, closes)
     plt.xticks(rotation = 45)
-    plt.savefig('plot.png')
+    return plt
     
 
 def stock_sectors():
