@@ -15,18 +15,27 @@ def doUnknownResponse():
 def queryChatbot(statement):
     addQueryToMetrics()
     
+    # Regular expression parts. These are concatenated to generate the final expression
+    # Most of these expressions are big due to matching broken english or unreasonable input
+    optionalDateRegex = r'(?:\s+in\s+(?:[0-9]+|[0-9]+\s*(?:st|nd|rd|th)?(?:\s+|\s*\/\s*)(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may?|june?|july?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|0*[1-9]|0*1[0-2])(?:(?:\s+|\s*\/\s*)[0-9]+)?))?'
+    companyNameRegex = r'\s+((?!\s).+?)'
+    questionEndRegex = r'[?!.\s]*$'
+    stockSymbolRegex = r'(?:\s+stock)?\s+(?:symbol|code)'
+    apostropheSRegex = r'(?:\'|\'?s)?'
+    whatRegex = r'^wh?at(?:\'?s|\s+is)'
+    prepositionRegex = r'\s+(?:for|of)'
+    optionalTheRegex = r'(?:\s*the)?'
+    
     # Try to match the type of question
     # Stock symbol (first variant)
-    # What is the stock symbol of ... (in XX/XX/XXXX)?
-    # Most of the expression is for matching broken english and dates in multiple formats
-    dateRegex = r'(?:\s+in\s+(?:[0-9]+|[0-9]+\s*(?:st|nd|rd|th)?(?:\s+|\s*\/\s*)(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may?|june?|july?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|0*[1-9]|0*1[0-2])(?:(?:\s+|\s*\/\s*)[0-9]+)?))?'
-    matches = re.match(r'^wh?at(?:\s+is(?:\s*the)?)?(?:\s+stock)?\s+(?:symbol|code)\s+(?:for|of)\s+((?!\s).+?)(?:\s+in\s+(?:[0-9]+|[0-9]+\s*(?:st|nd|rd|th)?(?:\s+|\s*\/\s*)(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may?|june?|july?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|0*[1-9]|0*1[0-2])(?:(?:\s+|\s*\/\s*)[0-9]+)?))?[?!.\s]*$', statement, re.IGNORECASE)
+    # (What's|What is) [the] [stock] symbol|code for|of ... [in (XX(/(XX|month)/XXXX))][?!.]
+    matches = re.match(whatRegex + optionalTheRegex + stockSymbolRegex + prepositionRegex + companyNameRegex + optionalDateRegex + questionEndRegex, statement, re.IGNORECASE)
     if matches != None:
         return doStockSymbolStatement(matches)
     
     # Stock symbol (second variant)
-    # What is ...'s stock symbol
-    matches = re.match(r'^wh?at\s+is\s+((?!\s).+?)(?:\'|s|\'s)?(?:\s+stock)?\s+(?:symbol|code)' + dateRegex + r'[?!.\s]*$', statement, re.IGNORECASE)
+    # (What's|What is) ...['s] [stock] symbol|code [in (XX(/(XX|month)/XXXX))][?!.]
+    matches = re.match(whatRegex + companyNameRegex + apostropheSRegex + stockSymbolRegex + optionalDateRegex + questionEndRegex, statement, re.IGNORECASE)
     if matches != None:
         return doStockSymbolStatement(matches)
     
