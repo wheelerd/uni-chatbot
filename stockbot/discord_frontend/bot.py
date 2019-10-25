@@ -1,4 +1,4 @@
-# bot.py
+#!/usr/bin/env python3
 import os
 import discord
 
@@ -27,6 +27,3 @@ async def create_channel(ctx, channel_name='real-python'):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
         await ctx.send('not admin')
-    
-bot.run(token)
-
