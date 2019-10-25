@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from .metrics import addQueryToMetrics
+from .financial import *
 import re
 
 
