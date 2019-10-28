@@ -1,3 +1,3 @@
 @echo off
 
-python3 -m stockbot.discord_frontend
+python -m stockbot.discord_frontend

@@ -1,3 +1,3 @@
 @echo off
 
-python3 -m stockbot.facebook_frontend
+python -m stockbot.facebook_frontend
