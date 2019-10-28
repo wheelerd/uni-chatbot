@@ -1,4 +1,6 @@
-import urllib.request, json, .alphavantage
+import urllib.request
+import json
+import .alphavantage
 import matplotlib.pyplot as plt
 
 def company_name_to_stock(company):
