@@ -4,9 +4,8 @@ from .financial import *
 import re
 
 
-def doStockSymbolStatement(matches):
-    companyName = matches.group(1)
-    return "STUB - got stock symbol for " + companyName # TODO implement
+def doStockSymbolStatement(companyName):
+    return companyName.capitalize() + "'s stock symbol is " + company_name_to_stock(companyName)[0]
 
 
 def doUnknownResponse():
@@ -32,12 +31,12 @@ def queryChatbot(statement):
     # (What's|What is) [the] [stock] symbol|code for|of ... [in (XX(/(XX|month)/XXXX))][?!.]
     matches = re.match(whatRegex + optionalTheRegex + stockSymbolRegex + prepositionRegex + companyNameRegex + optionalDateRegex + questionEndRegex, statement, re.IGNORECASE)
     if matches != None:
-        return doStockSymbolStatement(matches)
+        return doStockSymbolStatement(matches.group(1))
     
     # Stock symbol (second variant)
     # (What's|What is) ...['s] [stock] symbol|code [in (XX(/(XX|month)/XXXX))][?!.]
     matches = re.match(whatRegex + companyNameRegex + apostropheSRegex + stockSymbolRegex + optionalDateRegex + questionEndRegex, statement, re.IGNORECASE)
     if matches != None:
-        return doStockSymbolStatement(matches)
+        return doStockSymbolStatement(matches.group(1))
     
     return doUnknownResponse()
