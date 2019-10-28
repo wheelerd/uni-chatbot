@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 def company_name_to_stock(company):
     """Returns the stock code of a company"""
-    stock = alphavantage.jsonReturn(company)
+    stock = jsonReturn(company)
     return stock
 
 def get_stock_json(urlGiven):
@@ -67,7 +67,7 @@ def major_indexes(dataRequired):
 
 def stock_historical_price_data(company, days):
     """Shows a graph of a specific stocks closes for the specified number of days prior to the current date"""
-    acronyms = alphavantage.jsonReturn(company)
+    acronyms = jsonReturn(company)
     stock = acronyms[0]
     url = "https://financialmodelingprep.com/api/v3/historical-price-full/" + stock + "?serietype=line"
     data = get_stock_json(url)
