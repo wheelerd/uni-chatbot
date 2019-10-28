@@ -2,7 +2,7 @@
 from os.path import dirname, realpath
 
 
-METRICS_FILE = dirname(realpath(__file__)) + "/metrics/apiMetrics.txt"
+METRICS_FILE = dirname(realpath(__file__)) + "\\metrics\\apiMetrics.txt"
 
 
 def getMetrics():

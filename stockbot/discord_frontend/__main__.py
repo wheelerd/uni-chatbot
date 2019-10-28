@@ -4,7 +4,7 @@ import discord
 
 from ..query import queryChatbot
 
-APP_TOKEN = "NjMzMzA1MjE2OTc1ODk2NTk2.XaSBvQ.GR0a2JZsu2Sw2fMRc1cqmU56s5U"
+APP_TOKEN = "NjMzMzA1MjE2OTc1ODk2NTk2.XbcNKQ.gXGIEK-Rl5VEPu9717fcWWG9S6s"
 APP_SERVER = "chatbot"
 BOT_CHANNEL = 633304649818046468
 
@@ -32,8 +32,9 @@ async def on_message(message):
         await message.channel.send(file=discord.File('test_image.png'))
     else:
         messageSlice = message.content[1:]
-        reponse = queryChatbot(messageSlice)
-        await message.channel.send(response)
+        print(messageSlice)
+        queryResponse = queryChatbot(messageSlice)
+        await message.channel.send(queryResponse)
         
 
 if __name__ == '__main__':
