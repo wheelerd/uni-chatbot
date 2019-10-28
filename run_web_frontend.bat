@@ -1,3 +1,3 @@
 @echo off
 
-python3 -m stockbot.web_frontend
+python -m stockbot.web_frontend
