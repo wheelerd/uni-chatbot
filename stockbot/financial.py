@@ -1,4 +1,4 @@
-import urllib.request, json, alphavantage
+import urllib.request, json, .alphavantage
 import matplotlib.pyplot as plt
 
 def company_name_to_stock(company):
@@ -19,19 +19,16 @@ def market_open_check():
     data = get_stock_json(url)
     marketState = data["isTheStockMarketOpen"]
     if marketState:
-        print("The market is open")
+        return True
     else:
-        print("The market is closed")
+        return False
 
 def market_holidays():
     """Shows the market holidays of the previous, current and next year"""
     url = "https://financialmodelingprep.com/api/v3/is-the-market-open"
     data = get_stock_json(url)
     allYearData = data["stockMarketHolidays"]
-    for i in range( len(allYearData)):
-        keys = list((allYearData[i]).keys())
-        for x in range( len(keys)):
-            print (keys[x] + " : " + str(allYearData[i][keys[x]]))
+    return allYearData
     
 
 def most_gainer_companies(dataRequired):
@@ -40,9 +37,7 @@ def most_gainer_companies(dataRequired):
     data = get_stock_json(url)
     stockList = data["mostGainerStock"]
     dataRequired = dataRequired.split(' ')
-    for i in range( len(stockList)):
-        for x in range( len(dataRequired)):
-            print(stockList[i][dataRequired[x]])
+    return stockList, dataRequired
 
 def most_active_companies(dataRequired):
     """Returns specified data about the 10 most active stocks"""
@@ -50,9 +45,7 @@ def most_active_companies(dataRequired):
     data = get_stock_json(url)
     stockList = data["mostActiveStock"]
     dataRequired = dataRequired.split(' ')
-    for i in range( len(stockList)):
-        for x in range( len(dataRequired)):
-            print(stockList[i][dataRequired[x]])
+    return stockList, dataRequired
 
 def most_loser_companies(dataRequired):
     """Returns specified data about the 10 most loser stocks"""
@@ -60,9 +53,7 @@ def most_loser_companies(dataRequired):
     data = get_stock_json(url)
     stockList = data["mostLoserStock"]
     dataRequired = dataRequired.split(' ')
-    for i in range( len(stockList)):
-        for x in range( len(dataRequired)):
-            print(stockList[i][dataRequired[x]])
+    return stockList, dataRequired
 
 def major_indexes(dataRequired):
     """Returns specified data about the major indexes"""
@@ -70,9 +61,7 @@ def major_indexes(dataRequired):
     data = get_stock_json(url)
     stockList = data["majorIndexesList"]
     dataRequired = dataRequired.split(' ')
-    for i in range( len(stockList)):
-        for x in range( len(dataRequired)):
-            print(stockList[i][dataRequired[x]])
+    return stockList, dataRequired
 
 def stock_historical_price_data(company, days):
     """Shows a graph of a specific stocks closes for the specified number of days prior to the current date"""
@@ -90,7 +79,7 @@ def stock_historical_price_data(company, days):
         dates.append(date[5:])
     plt.plot(dates, closes)
     plt.xticks(rotation = 45)
-    plt.savefig('plot.png')
+    return plt
     
 
 def stock_sectors():
@@ -98,9 +87,7 @@ def stock_sectors():
     url = "https://financialmodelingprep.com/api/v3/stock/sectors-performance"
     data = get_stock_json(url)
     sectorInfo = data["sectorPerformance"]
-    for i in range( len(sectorInfo)):
-        print(sectorInfo[i]["sector"])
-        print(sectorInfo[i]["changesPercentage"])
+    return sectorInfo
 
 def stock_profile(stock):
     """Returns the profile of a stock"""
@@ -108,31 +95,23 @@ def stock_profile(stock):
     data = get_stock_json(url)
     profile = data["profile"]
     profileTypes = ["price", "beta", "volAvg", "mktCap", "lastDiv", "range", "changes", "changesPercentage", "companyName", "exchange", "industry", "website", "description", "ceo", "sector"]
-    for i in range( len(profileTypes)):
-        print(profileTypes[i] + " : " + str(profile[profileTypes[i]]))
+    return profile, profileTypes
 
 def stock_price(stock):
     """Returns the price of a stock in realtime"""
     url = "https://financialmodelingprep.com/api/v3/stock/real-time-price/" + stock
     data = get_stock_json(url)
     price = data["price"]
-    print(price)
+    return price
 
 def annual_income_statements(stock, year):
     """Returns annual income statements of a stock for a specified year"""
     url = "https://financialmodelingprep.com/api/v3/financials/income-statement/" + stock
     data = get_stock_json(url)
     incomeSheets = data["financials"]
-    for i in range( len(incomeSheets)):
-        date = incomeSheets[i]["date"]
-        dateYear = date[:4]
-        if (int(dateYear) == year):
-            keys = list((incomeSheets[i]).keys())
-            for x in range( len(keys)):
-                print (keys[x] + " : " + str(incomeSheets[i][keys[x]]))
+    return incomeSheets
 
     
-#company_name_to_stock("apple")
 
 #stock_price("MSFT")
     
