@@ -25,3 +25,4 @@ def spaceCheck(keyword):
 
 #financialmodellingprep has an api that does something similar but just returns a long list so would take ages
 
+#print(jsonReturn("apple"))
