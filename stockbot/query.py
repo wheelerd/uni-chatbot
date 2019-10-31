@@ -9,13 +9,18 @@ def doStockSymbolStatement(companyName):
 
 
 def doRecommendationStatement(who, stockSymbol):
+    who = who.lower()
+    stockSymbol = stockSymbol.upper()
     if who == None or who == 'me' or who == 'myself' or who == 'i':
         who = 'you'
+    elif who == 'you' or who == 'yourself':
+        return "I don't think I should invest in " + stockSymbol + ", because I am a robot!"
     else:
-        who = who.title()
+        if who != 'he' and who != 'she' and who != 'it' and who != 'they' and who != 'them':
+            who = who.title()
 
     # TODO actually decide something
-    return "I think " + who + " should invest in " + stockSymbol.upper()
+    return "I think " + who + " should invest in " + stockSymbol
 
 
 def doUnknownResponse():
@@ -35,7 +40,7 @@ def queryChatbot(statement):
     whatRegex = r'^wh?at(?:\'?s|\s+is)'
     prepositionRegex = r'\s+(?:for|of)'
     optionalTheRegex = r'(?:\s*the)?'
-    recommendRegex = r'^(?:should|(?:do\s+)?(?:you\s+)?(?:recommend))'
+    recommendRegex = r'^(?:should|(?:do\s+)?(?:you\s+)?(?:recommend|think))'
     optionalNameRegex = r'(?:' + nameRegex + r')?'
     investRegex = r'\s+(?:(?:to\s+)?invests?|(?:buys?|gets?)\s+(?:stocks?|shares?))\s+(?:in|for)'
     
