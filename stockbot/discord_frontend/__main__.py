@@ -28,13 +28,19 @@ async def on_message(message):
     if message.author == client.user or message.channel != client.get_channel(BOT_CHANNEL) or message.content[0] != "!":
         return # if the user is the bot or the channel is not bot-chat or there is no prefix
 
-    if "send image" in message.content.lower():
-        await message.channel.send(file=discord.File('test_image.png'))
-    else:
-        messageSlice = message.content[1:]
-        print(messageSlice)
-        queryResponse = queryChatbot(messageSlice)
-        await message.channel.send(queryResponse)
+    # Get query response
+    messageSlice = message.content[1:]
+    reponse, image = queryChatbot(messageSlice)
+    
+    # Prepare image if any
+    imageFile = None
+    if image != None:
+        byteBuffer = BytesIO()
+        image.save(byteBuffer, format='PNG')
+        imageFile = discord.File(byteBuffer)
+    
+    # Send response
+    await message.channel.send(response, file=imageFile)
         
 
 if __name__ == '__main__':
