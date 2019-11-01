@@ -30,7 +30,8 @@ def receive_message():
                 #Facebook Messenger ID for user so we know where to send response back to
                 recipient_id = message['sender']['id']
                 if message['message'].get('text'):
-                    querRes = queryChatbot(message['message'].get('text'))
+                    querRes, querImage = queryChatbot(message['message'].get('text'))
+                    # TODO, yo baljot, add image support by sending querImage. Its a python pillow Image object
                     send_message(recipient_id, querRes)
     
                 """#if user sends us a GIF, photo,video, or any other non-text item

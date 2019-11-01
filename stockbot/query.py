@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
+from PIL import Image, ImageDraw
 from .metrics import addQueryToMetrics
 from .financial import *
 import re
 
 
 def doStockSymbolStatement(companyName):
-    return companyName.capitalize() + "'s stock symbol is " + company_name_to_stock(companyName)[0]
+    return companyName.capitalize() + "'s stock symbol is " + company_name_to_stock(companyName)[0], None
 
 
 def doRecommendationStatement(who, stockSymbol):
@@ -20,14 +21,15 @@ def doRecommendationStatement(who, stockSymbol):
             who = who.title()
 
     # TODO actually decide something
-    return "I think " + who + " should invest in " + stockSymbol
+    return "I think " + who + " should invest in " + stockSymbol, None
 
 
 def doUnknownResponse():
-    return "I'm sorry, I don't understand your question" # TODO random response?
+    return "I'm sorry, I don't understand your question", None # TODO random response?
 
 
 def queryChatbot(statement):
+    """ Ask the bot a question [statement]. Returns a response string and a pillow image as a tuple """
     addQueryToMetrics()
     
     # Regular expression parts. These are concatenated to generate the final expression
