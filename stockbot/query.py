@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from PIL import Image
-from random import randint
+from random import choice
 from .metrics import addQueryToMetrics
 from .financial import *
 import re
@@ -36,9 +36,7 @@ def doUnknownResponse():
         "What?",
     ]
     
-    resI = randint(0, 6)
-    
-    return responses[resI], None
+    return choice(responses), None
 
 
 def queryChatbot(statement):
