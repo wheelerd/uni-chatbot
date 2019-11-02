@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-from PIL import Image, ImageDraw
+from PIL import Image
+from random import choice
 from .metrics import addQueryToMetrics
 from .financial import *
 import re
@@ -25,7 +26,17 @@ def doRecommendationStatement(who, stockSymbol):
 
 
 def doUnknownResponse():
-    return "I'm sorry, I don't understand your question", None # TODO random response?
+    responses = [
+        "I'm sorry, I don't understand your question",
+        "I'm sorry, I don't understand you",
+        "I'm sorry, I don't know what you mean",
+        "I don't understand your question",
+        "I don't understand you",
+        "I don't know what you mean",
+        "What?",
+    ]
+    
+    return choice(responses), None
 
 
 def queryChatbot(statement):
