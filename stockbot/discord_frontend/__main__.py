@@ -30,7 +30,7 @@ async def on_message(message):
 
     # Get query response
     messageSlice = message.content[1:]
-    reponse, image = queryChatbot(messageSlice)
+    responseText, image = queryChatbot(messageSlice)
     
     # Prepare image if any
     imageFile = None
@@ -40,7 +40,7 @@ async def on_message(message):
         imageFile = discord.File(byteBuffer)
     
     # Send response
-    await message.channel.send(response, file=imageFile)
+    await message.channel.send(responseText, file=imageFile)
         
 
 if __name__ == '__main__':
