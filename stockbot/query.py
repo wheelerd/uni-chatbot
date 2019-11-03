@@ -3,11 +3,15 @@ from PIL import Image
 from random import choice
 from .metrics import addQueryToMetrics
 from .financial import *
+import qrcode
 import re
 
 
 def doStockSymbolStatement(companyName):
-    return companyName.capitalize() + "'s stock symbol is " + company_name_to_stock(companyName)[0], None
+    symbol = company_name_to_stock(companyName)[0]
+    text = companyName.capitalize() + "'s stock symbol is " + symbol
+    image = qrcode.make("https://www.google.com/search?q=" + symbol)
+    return text, image
 
 
 def doRecommendationStatement(who, stockSymbol):
