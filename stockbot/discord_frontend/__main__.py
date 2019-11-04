@@ -4,7 +4,7 @@ import discord
 
 from ..query import queryChatbot
 
-APP_TOKEN = "NjMzMzA1MjE2OTc1ODk2NTk2.XaSBvQ.GR0a2JZsu2Sw2fMRc1cqmU56s5U"
+APP_TOKEN = "NjMzMzA1MjE2OTc1ODk2NTk2.XbcNKQ.gXGIEK-Rl5VEPu9717fcWWG9S6s"
 APP_SERVER = "chatbot"
 BOT_CHANNEL = 633304649818046468
 
@@ -28,12 +28,19 @@ async def on_message(message):
     if message.author == client.user or message.channel != client.get_channel(BOT_CHANNEL) or message.content[0] != "!":
         return # if the user is the bot or the channel is not bot-chat or there is no prefix
 
-    if "send image" in message.content.lower():
-        await message.channel.send(file=discord.File('test_image.png'))
-    else:
-        messageSlice = message.content[1:]
-        reponse = queryChatbot(messageSlice)
-        await message.channel.send(response)
+    # Get query response
+    messageSlice = message.content[1:]
+    responseText, image = queryChatbot(messageSlice)
+    
+    # Prepare image if any
+    imageFile = None
+    if image != None:
+        byteBuffer = BytesIO()
+        image.save(byteBuffer, format='PNG')
+        imageFile = discord.File(byteBuffer)
+    
+    # Send response
+    await message.channel.send(responseText, file=imageFile)
         
 
 if __name__ == '__main__':

@@ -23,3 +23,8 @@ body {
     font-weight: 500;
     word-wrap: break-word;
 }
+
+.answerBox > img {
+    display: block;
+    margin: auto;
+}

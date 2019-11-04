@@ -10,7 +10,7 @@ function doQuery() {
             jsonResponse = JSON.parse(xhttp.responseText);
             
             // Add to answer list
-            addAnswer(jsonResponse.response);
+            addAnswer(jsonResponse.response, jsonResponse.image);
         }
     };
     xhttp.open("GET", "/api/query?query=" + encodeURIComponent(queryText), true);
@@ -46,11 +46,19 @@ function getMetrics() {
     xhttp.send();
 }
 
-function addAnswer(text) {
+function addAnswer(text, imageBase64) {
     // Create answer box
     newDiv = document.createElement("div");
     newDiv.className = "answerBox";
     newDiv.textContent = text;
+    
+    if(imageBase64 !== null) {
+        newBreak = document.createElement("br");
+        newDiv.appendChild(newBreak);
+        newImg = document.createElement("img");
+        newImg.setAttribute('src', 'data:image/png;base64,' + imageBase64);
+        newDiv.appendChild(newImg);
+    }
     
     // Add to answer list
     answerList = document.getElementById("answerList");
