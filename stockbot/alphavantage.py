@@ -29,7 +29,7 @@ def time_series_weekly(stock):
         results = data["Weekly Time Series"]
         return results
 
-print(time_series_weekly("MSFT"))
+
         
     
 
