@@ -20,6 +20,16 @@ def spaceCheck(keyword):
     if (' ' in keyword):
         keyword = keyword.replace(' ','+')
     return keyword
+
+def time_series_weekly(stock):
+    """Returns weekly time series for a stock"""
+    url = "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=" + stock + "&apikey=VUUG2MG0ELJZOOGF"
+    with urllib.request.urlopen(url) as url:
+        data = json.loads(url.read().decode())
+        results = data["Weekly Time Series"]
+        return results
+
+print(time_series_weekly("MSFT"))
         
     
 
