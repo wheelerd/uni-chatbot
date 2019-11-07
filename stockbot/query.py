@@ -3,6 +3,7 @@ from PIL import Image
 from random import choice
 from .metrics import addQueryToMetrics
 from .financial import *
+from .currency import *
 import qrcode
 import re
 
@@ -27,6 +28,10 @@ def doRecommendationStatement(who, stockSymbol):
 
     # TODO actually decide something
     return "I think " + who + " should invest in " + stockSymbol, None
+
+def doCurrencyStatement(num, currency1, currency2):
+    data = convert(currency1,currency2)
+    return num + " " + getCurrencyData(data,2) + " converted is " + str(int(num) * float(getCurrencyData(data,5))) + " " + getCurrencyData(data,4)
 
 
 def doUnknownResponse():
@@ -79,5 +84,11 @@ def queryChatbot(statement):
     matches = re.match(recommendRegex + optionalNameRegex + investRegex + nameRegex + questionEndRegex, statement, re.IGNORECASE)
     if matches != None:
         return doRecommendationStatement(matches.group(1), matches.group(2))
+    
+    # Currency Conversion
+    # (What's|What is) ...['s] [value] in ...?
+    matches = re.match(whatRegex + numRegex + nameRegex + apostropheSRegex + convertRegex + nameRegex + questionEndRegex, statement, re.IGNORECASE)
+    if matches != None:
+        return doCurrencyStatement(matches.group(1),matches.group(2),matches.group(3))
     
     return doUnknownResponse()
