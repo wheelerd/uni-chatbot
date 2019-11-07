@@ -32,7 +32,7 @@ def doRecommendationStatement(who, stockSymbol):
 def doCurrencyStatement(num, currency1, currency2):
     print(num, currency1, currency2)
     data = convert(currency1,currency2)
-    text = num + " " + getCurrencyData(data,2) + " converted is " + str(round(int(num) * float(getCurrencyData(data,5)),4) + " " + getCurrencyData(data,4)
+    text = num + " " + getCurrencyData(data,2) + " converted is " + str(round(int(num) * float(getCurrencyData(data,5)),4) + " " + getCurrencyData(data,4))
     return text, None
 
 
