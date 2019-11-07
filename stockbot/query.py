@@ -65,6 +65,8 @@ def queryChatbot(statement):
     recommendRegex = r'^(?:should|(?:do\s+)?(?:you\s+)?(?:recommend|think))'
     optionalNameRegex = r'(?:' + nameRegex + r')?'
     investRegex = r'\s+(?:(?:to\s+)?invests?|(?:buys?|gets?)\s+(?:stocks?|shares?))\s+(?:in|for)'
+    convertRegex = r'\s(?:converted|in)'
+    numRegex = r'\s([0-9]*)'
     
     # Try to match the type of question
     # Stock symbol (first variant)
