@@ -30,8 +30,10 @@ def doRecommendationStatement(who, stockSymbol):
     return "I think " + who + " should invest in " + stockSymbol, None
 
 def doCurrencyStatement(num, currency1, currency2):
+    print(num, currency1, currency2)
     data = convert(currency1,currency2)
-    return num + " " + getCurrencyData(data,2) + " converted is " + str(int(num) * float(getCurrencyData(data,5))) + " " + getCurrencyData(data,4)
+    text = num + " " + getCurrencyData(data,2) + " converted is " + str(round(int(num) * float(getCurrencyData(data,5)),4) + " " + getCurrencyData(data,4)
+    return text, None
 
 
 def doUnknownResponse():
@@ -65,7 +67,7 @@ def queryChatbot(statement):
     recommendRegex = r'^(?:should|(?:do\s+)?(?:you\s+)?(?:recommend|think))'
     optionalNameRegex = r'(?:' + nameRegex + r')?'
     investRegex = r'\s+(?:(?:to\s+)?invests?|(?:buys?|gets?)\s+(?:stocks?|shares?))\s+(?:in|for)'
-    convertRegex = r'\s(?:converted|in)'
+    convertRegex = r'\s(?:converted to|in)'
     numRegex = r'\s([0-9]*)'
     
     # Try to match the type of question
@@ -90,6 +92,7 @@ def queryChatbot(statement):
     # Currency Conversion
     # (What's|What is) ...['s] [value] in ...?
     matches = re.match(whatRegex + numRegex + nameRegex + apostropheSRegex + convertRegex + nameRegex + questionEndRegex, statement, re.IGNORECASE)
+    print(matches.group(1), matches.group(2),matches.group(3))
     if matches != None:
         return doCurrencyStatement(matches.group(1),matches.group(2),matches.group(3))
     
