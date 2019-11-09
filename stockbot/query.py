@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-from PIL import Image
+from .qr_pil import QRCode
 from random import choice
 from .metrics import addQueryToMetrics
 from .financial import *
 from .currency import *
-import qrcode
 import re
 
 
 def doStockSymbolStatement(companyName):
     symbol = company_name_to_stock(companyName)[0]
     text = companyName.capitalize() + "'s stock symbol is " + symbol
-    image = qrcode.make("https://www.google.com/search?q=" + symbol)
+    image = QRCode("https://www.google.com/search?q=" + symbol).toImage()
     return text, image
 
 
