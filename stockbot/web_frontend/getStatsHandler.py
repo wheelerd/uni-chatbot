@@ -2,6 +2,6 @@
 from ..metrics import getMetrics
 
 
-def getStats(queryString):
+def getStats(_, queryString):
     apiCalls = getMetrics()
     return {"apiCalls": apiCalls}

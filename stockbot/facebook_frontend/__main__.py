@@ -4,12 +4,13 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 
 #calling query module 
-from ..query import queryChatbot 
+from ..query import QueryHandler 
 
 app = Flask(__name__)
 ACCESS_TOKEN = 'EAAFyaMBjoygBALqoEea3HEQKKZCgMbkXDFhQ8i23N7uRqOvJuIMHDAMIw9XyHvZAiCfE2kJW34NBu5jHnetXggtXCZCfTa5yPwB1k1hLAiwyzO90EPtwDMVW42hZAbmcjV6OakGZA9eRpujegZA8gebyEmBcUf4G3Nf6kCmIDtcdXowQetgzglFEJq2Wv7ZBL8ZD'
 VERIFY_TOKEN = 'testtoken'
 bot = Bot(ACCESS_TOKEN)
+queryHandler = QueryHandler()
 
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
@@ -30,7 +31,7 @@ def receive_message():
                 #Facebook Messenger ID for user so we know where to send response back to
                 recipient_id = message['sender']['id']
                 if message['message'].get('text'):
-                    querRes, querImage = queryChatbot(message['message'].get('text'))
+                    querRes, querImage = queryHandler.queryChatbot(message['message'].get('text'))
                     # TODO, yo baljot, add image support by sending querImage. Its a python pillow Image object
                     send_message(recipient_id, querRes)
     

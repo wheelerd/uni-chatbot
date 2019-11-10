@@ -7,11 +7,12 @@ from .apiHandlers import apiHandlers
 from .restError import RESTError
 from .fileCacher import *
 
-
 apiPathRegex = re.compile(r'^/api/([^/]*)$')
 
 
 class HTTPApiHandler(BaseHTTPRequestHandler):
+    queryHandler = None
+    
     def _serveFile(self, path):
         if path == '/':
             path = '/index.html'
@@ -46,7 +47,7 @@ class HTTPApiHandler(BaseHTTPRequestHandler):
                 if callName in apiHandlers.keys():
                     self.log_message('Serving REST API call "{}"'.format(callName))
                     try:
-                        result = apiHandlers[callName](queries)
+                        result = apiHandlers[callName](HTTPApiHandler.queryHandler, queries)
                     except RESTError as e:
                         self.send_response(403, "REST API call failed")
                         self.send_header("Content-Type", "application/json")

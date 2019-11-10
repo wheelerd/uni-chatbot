@@ -2,13 +2,14 @@
 import os
 import discord
 
-from ..query import queryChatbot
+from ..query import QueryHandler
 
 APP_TOKEN = "NjMzMzA1MjE2OTc1ODk2NTk2.XbcNKQ.gXGIEK-Rl5VEPu9717fcWWG9S6s"
 APP_SERVER = "chatbot"
 BOT_CHANNEL = 633304649818046468
 
 client = discord.Client()
+queryHandler = QueryHandler()
 
 @client.event
 async def on_ready():
@@ -30,7 +31,7 @@ async def on_message(message):
 
     # Get query response
     messageSlice = message.content[1:]
-    responseText, image = queryChatbot(messageSlice)
+    responseText, image = queryHandler.queryChatbot(messageSlice)
     
     # Prepare image if any
     imageFile = None

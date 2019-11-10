@@ -3,8 +3,10 @@ from http.server import ThreadingHTTPServer
 from os.path import dirname, realpath
 from .httpHandler import HTTPApiHandler
 from .fileCacher import cacheFile
+from ..query import QueryHandler
 
 def startServer(port):
+    HTTPApiHandler.queryHandler = QueryHandler()
     filesPath = dirname(realpath(__file__)) + "/files"
     cacheFile(None, filesPath + "/404.html", "text/html")
     cacheFile("/404_styles.css", filesPath + "/404_styles.css", "text/css")
