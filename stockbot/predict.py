@@ -5,7 +5,7 @@ from os.path import dirname, realpath
 
 
 def load_predict_model():
-    json_file = open(dirname(realpath(__file__)) + 'model/model.json', 'r')
+    json_file = open(dirname(realpath(__file__)) + '/model/model.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model=model_from_json(loaded_model_json)
