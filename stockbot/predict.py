@@ -9,7 +9,7 @@ def load_predict_model():
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model=model_from_json(loaded_model_json)
-    loaded_model.load_weights("model.h5")
+    loaded_model.load_weights(dirname(realpath(__file__)) + '/model/model.h5')
     return loaded_model
 
 
