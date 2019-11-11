@@ -47,7 +47,13 @@ class QueryHandler:
 
 
     def doPredictionStatement(self, symbol):
-        pass
+        pred = None
+        try:
+            pred = predict(self.predict_model, symbol.lower())
+        except Exception as e:
+            print(e)
+            return "Sorry, I can't predict for that company", None
+        return "I predict the stocks for next week are worth " + str(pred), None
     
     
     def doUnknownResponse(self):
@@ -102,6 +108,12 @@ class QueryHandler:
         matches = re.match(recommendRegex + optionalNameRegex + investRegex + nameRegex + questionEndRegex, statement, re.IGNORECASE)
         if matches != None:
             return self.doRecommendationStatement(matches.group(1), matches.group(2))
+        
+        # Stock prediction
+        # what do you predict for this company ...
+        matches = re.match('^\s*what\s+(?:are\s+the\s+stock\s+predictions\s+for\s+this|do\s+you\s+predict\s+for\s+this)\s+company\s+([a-z]+?)\s*$', statement, re.IGNORECASE)
+        if matches != None:
+            return self.doPredictionStatement(matches.group(1))
         
         # Currency Conversion
         # (What's|What is) ...['s] [value] in ...?

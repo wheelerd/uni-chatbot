@@ -2,6 +2,7 @@
 from .alphavantage import time_series_weekly
 from keras.models import model_from_json
 from os.path import dirname, realpath
+import numpy as np
 
 
 def load_predict_model():
@@ -19,4 +20,5 @@ def predict(loaded_model, symbol):
     for timestamp, data in t.items():
         clos=float(data['4. close'])
         inTimeseries.insert(0, clos)
-    return loaded_model.predict(np.atleast_3d(inTimeseries))
+    inTimeseries = inTimeseries[:200]
+    return loaded_model.predict(np.atleast_3d(inTimeseries))[0][0]
