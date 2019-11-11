@@ -36,7 +36,12 @@ class QueryHandler:
 
     def doCurrencyStatement(self, num, currency1, currency2):
         print(num, currency1, currency2)
-        data = convert(currency1,currency2)
+        currency1 = currency1.upper()
+        currency2 = currency2.upper()
+        try:
+            data = convert(currency1,currency2)
+        except:
+            return "Sorry, I don't know how to convert that", None
         text = num + " " + getCurrencyData(data,2) + " converted is " + str(round(int(num) * float(getCurrencyData(data,5)),4)) + " " + getCurrencyData(data,4)
         return text, None
 
