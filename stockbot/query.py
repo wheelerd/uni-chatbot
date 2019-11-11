@@ -13,14 +13,14 @@ class QueryHandler:
         self.predict_model = load_predict_model()
         print("QueryHandler -- loaded prediction model")
         
-    def doStockSymbolStatement(companyName):
+    def doStockSymbolStatement(self, companyName):
         symbol = company_name_to_stock(companyName)[0]
         text = companyName.capitalize() + "'s stock symbol is " + symbol
         image = QRCode("https://www.google.com/search?q=" + symbol).toImage()
         return text, image
 
 
-    def doRecommendationStatement(who, stockSymbol):
+    def doRecommendationStatement(self, who, stockSymbol):
         who = who.lower()
         stockSymbol = stockSymbol.upper()
         if who == None or who == 'me' or who == 'myself' or who == 'i':
@@ -34,18 +34,18 @@ class QueryHandler:
         # TODO actually decide something
         return "I think " + who + " should invest in " + stockSymbol, None
 
-    def doCurrencyStatement(num, currency1, currency2):
+    def doCurrencyStatement(self, num, currency1, currency2):
         print(num, currency1, currency2)
         data = convert(currency1,currency2)
         text = num + " " + getCurrencyData(data,2) + " converted is " + str(round(int(num) * float(getCurrencyData(data,5)),4)) + " " + getCurrencyData(data,4)
         return text, None
 
 
-    def doPredictionStatement(symbol):
+    def doPredictionStatement(self, symbol):
         pass
     
     
-    def doUnknownResponse():
+    def doUnknownResponse(self):
         responses = [
             "I'm sorry, I don't understand your question",
             "I'm sorry, I don't understand you",
@@ -59,7 +59,7 @@ class QueryHandler:
         return choice(responses), None
 
 
-    def queryChatbot(statement):
+    def queryChatbot(self, statement):
         """ Ask the bot a question [statement]. Returns a response string and a pillow image as a tuple """
         addQueryToMetrics()
         
@@ -84,25 +84,24 @@ class QueryHandler:
         # (What's|What is) [the] [stock] symbol|code for|of ... [in (XX(/(XX|month)/XXXX))][?!.]
         matches = re.match(whatRegex + optionalTheRegex + stockSymbolRegex + prepositionRegex + nameRegex + optionalDateRegex + questionEndRegex, statement, re.IGNORECASE)
         if matches != None:
-            return doStockSymbolStatement(matches.group(1))
+            return self.doStockSymbolStatement(matches.group(1))
         
         # Stock symbol (second variant)
         # (What's|What is) ...['s] [stock] symbol|code [in (XX(/(XX|month)/XXXX))][?!.]
         matches = re.match(whatRegex + nameRegex + apostropheSRegex + stockSymbolRegex + optionalDateRegex + questionEndRegex, statement, re.IGNORECASE)
         if matches != None:
-            return doStockSymbolStatement(matches.group(1))
+            return self.doStockSymbolStatement(matches.group(1))
         
         # Recommendation
         # (Should|[Do ][you ]recommend) [...] (to invest|invests|buys (stocks|shares)) in|for ...[?!.]
         matches = re.match(recommendRegex + optionalNameRegex + investRegex + nameRegex + questionEndRegex, statement, re.IGNORECASE)
         if matches != None:
-            return doRecommendationStatement(matches.group(1), matches.group(2))
+            return self.doRecommendationStatement(matches.group(1), matches.group(2))
         
         # Currency Conversion
         # (What's|What is) ...['s] [value] in ...?
         matches = re.match(whatRegex + numRegex + nameRegex + apostropheSRegex + convertRegex + nameRegex + questionEndRegex, statement, re.IGNORECASE)
-        print(matches.group(1), matches.group(2),matches.group(3))
         if matches != None:
-            return doCurrencyStatement(matches.group(1),matches.group(2),matches.group(3))
+            return self.doCurrencyStatement(matches.group(1),matches.group(2),matches.group(3))
         
-        return doUnknownResponse()
+        return self.doUnknownResponse()
