@@ -4,7 +4,15 @@ import discord
 
 from ..query import QueryHandler
 
-APP_TOKEN = "NjMzMzA1MjE2OTc1ODk2NTk2.XbcNKQ.gXGIEK-Rl5VEPu9717fcWWG9S6s"
+f = open("DiscordKey.txt", "r")
+key = f.read().split()
+f.close()
+
+strKey = ""
+for i in key:
+    strKey += chr(int(i))
+
+APP_TOKEN = strKey
 APP_SERVER = "chatbot"
 BOT_CHANNEL = 633304649818046468
 
