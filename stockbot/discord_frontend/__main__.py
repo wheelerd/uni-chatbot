@@ -17,6 +17,7 @@ def decrypt(filename):
         chars.append(chr(i))
 
     new = ""
+    shift = len(token) % len(chars)
     for i in token:
         if chars.index(i) - shift < 0:
             new += chars[chars.index(i)-shift+len(chars)]
