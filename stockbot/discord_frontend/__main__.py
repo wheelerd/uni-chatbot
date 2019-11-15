@@ -4,15 +4,28 @@ import discord
 
 from ..query import QueryHandler
 
-f = open("DiscordKey.txt", "r")
-key = f.read().split()
-f.close()
+def decrypt(filename):
+    f = open(filename, "r")
+    token = f.read()
+    f.close()
 
-strKey = ""
-for i in key:
-    strKey += chr(int(i))
+    values = []
+    values += list(range(45,47)) + list(range(48,58)) + list(range(65,91)) + [95] + list(range(97,123))
 
-APP_TOKEN = strKey
+    chars = []
+    for i in values:
+        chars.append(chr(i))
+
+    new = ""
+    for i in token:
+        if chars.index(i) - shift < 0:
+            new += chars[chars.index(i)-shift+len(chars)]
+        else:
+            new += chars[chars.index(i)-shift]
+
+    return new
+
+APP_TOKEN = decrypt("DiscordKey.txt")
 APP_SERVER = "chatbot"
 BOT_CHANNEL = 633304649818046468
 
